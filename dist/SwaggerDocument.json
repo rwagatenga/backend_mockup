@@ -1,0 +1,182 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Todo API Docs",
+        "description": "This is the documentation of Todo App",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "TODO",
+            "description": "API for Todo App System"
+        }
+    ],
+    "schemes": ["http", "https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/todo": {
+            "get": {
+                "tags": ["Todos"],
+                "summary": "Get all Todos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#definition/todos"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Todo"],
+                "summary": "Create a new Todo",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The Todo that we want to create",
+                        "schema": {
+                            "$ref": "#definitions/todo"
+                        }
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to Create Todo"
+                    }
+                }
+            }
+        },
+        "/todo/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "The Id of a single Todo we want to get",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": ["Todo"],
+                "summary": "Get Single Todo",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#definition/todo"
+                        }
+                    },
+                    "400": {
+                        "description": "Todo not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Todo"],
+                "summary": "Update a Todo",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The Todo that we want to create",
+                        "schema": {
+                            "$ref": "#definitions/todo"
+                        }
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to Create Todo"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Todo"],
+                "summary": "Delete Single Todo",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#definition/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Todo not found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "id": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "todo": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "priority": {
+                    "type": "string"
+                }
+            }
+        },
+        "todos": {
+            "type": "object",
+            "properties": {
+                "todos": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/todo"
+                    }
+                }
+            }
+        },
+        "createDate": {
+            "properties": {
+                "createDate": {
+                    "type": "string",
+                    "description": "It keeps automatically date, time and UTC for every changes on todo item and not necessary to insert it manually"
+                }
+            }
+        },
+        "modifiedDate": {
+            "properties": {
+                "modifiedDate": {
+                    "type": "string",
+                    "description": "It keeps automatically date, time and UTC for every changes on todo item and not necessary to insert it manually"
+                }
+            }
+        }
+    }
+}
