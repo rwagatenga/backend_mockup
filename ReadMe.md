@@ -16,5 +16,6 @@
 ## Another Description
 
 <p> You can use for instance localhost:3000/todo in your postman or you can use localhost:3000/apidoc to get all API documentation</p>
+<p> You can also type npm test to see if any function we used in controller is running smoothly </p>
 
 <h2>Enjoy My App</2>
