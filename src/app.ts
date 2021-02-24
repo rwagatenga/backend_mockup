@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { json } from "body-parser";
 import SwaggerUi from "swagger-ui-express";
-// import swaggerJsdoc from "swagger-jsdoc";
 import * as SwaggerDocument from "./SwaggerDocument.json";
 
 /** getting all routes */
@@ -21,6 +20,22 @@ const options = {
 };
 /** express with body-parser to allow user inputs */
 app.use(json());
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader(
+		"Access-Control-Allow-Method",
+		"GET, POST, PUT, PATCH, DELETE, OPTIONS"
+	);
+	res.setHeader(
+		"Access-Control-Allow-Header",
+		"Accept, Content-Type, Authorization"
+	);
+	if (req.method === "OPTIONS") {
+		return res.sendStatus(200);
+	}
+	next();
+});
 
 /** SwaggerUi */
 app.use("/apidoc", SwaggerUi.serve, SwaggerUi.setup(SwaggerDocument));

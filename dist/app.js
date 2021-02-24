@@ -25,7 +25,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = require("body-parser");
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
-// import swaggerJsdoc from "swagger-jsdoc";
 const SwaggerDocument = __importStar(require("./SwaggerDocument.json"));
 /** getting all routes */
 const TodoRoutes_1 = __importDefault(require("./routes/TodoRoutes"));
@@ -42,6 +41,15 @@ const options = {
 };
 /** express with body-parser to allow user inputs */
 app.use(body_parser_1.json());
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Method", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Header", "Accept, Content-Type, Authorization");
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(200);
+    }
+    next();
+});
 /** SwaggerUi */
 app.use("/apidoc", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(SwaggerDocument));
 /** connect our app with our routes */
